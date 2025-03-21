@@ -13,6 +13,7 @@ const AppRoutes: FC= () => {
         <Route path="/" element={<VisitorLogin />} />
         <Route path="/register" element={<VisitorRegister />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/register" element={<VisitorRegister />} />
         <Route path="*" element={<NotFound />} /> {/* 404 Page */}
       </Routes>
     </Router>
