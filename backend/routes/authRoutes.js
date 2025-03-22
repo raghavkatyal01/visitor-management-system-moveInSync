@@ -1,7 +1,8 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import User from "../models/Admin.js"; // Admin Model
+import Visitor from "../models/Visitor.js"; // Visitor Model
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -12,58 +13,39 @@ const generateToken = (id) => {
 };
 
 
-router.post("/register", async (req, res) => {
-  try {
-    const { name, email, password, role } = req.body;
-
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({ name, email, password: hashedPassword, role });
-
-    if (user) {
-      res.status(201).json({
-        _id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        token: generateToken(user.id),
-      });
-    } else {
-      res.status(400).json({ message: "Invalid user data" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-
-router.post("/login", async (req, res) => {
+router.post("/visitors/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    const user = await User.findOne({ email });
-    if (user && (await bcrypt.compare(password, user.password))) {
-      res.json({
-        _id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        token: generateToken(user.id),
-      });
-    } else {
-      res.status(401).json({ message: "Invalid email or password" });
+    const visitor = await Visitor.findOne({ email });
+    if (!Visitor || !visitor.password) {
+      return res.status(401).json({ error: "Invalid email or password" });
     }
+   
+
+
+    const isMatch = await bcrypt.compare(password, visitor.password);
+    if (!isMatch) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    res.json({
+      message: "Login successful",
+      visitor: { _id: visitor._id, name: visitor.name, email: visitor.email },
+      token: generateToken(visitor._id),
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Error logging in visitor:", error);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
+
 router.get("/profile", protect, async (req, res) => {
-  res.json(req.user);
+  try {
+    res.json(req.user);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 export default router;
