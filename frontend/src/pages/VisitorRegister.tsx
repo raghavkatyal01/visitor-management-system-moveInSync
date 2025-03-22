@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const VisitorRegister: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -9,7 +10,7 @@ const VisitorRegister: React.FC = () => {
     visitDate: "",
     password: "",
   });
-
+  const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -23,16 +24,17 @@ const VisitorRegister: React.FC = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:5002/api/auth/register", formData);
+      const response = await axios.post("http://localhost:5002/api/visitors/register", formData);
       setMessage("Registration successful! You can now log in.");
+      navigate("/visitorlogin");
     } catch (err) {
       setError("Registration failed. Please check your details.");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-96">
+    <div className="flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen">
+      <div className="bg-white shadow-3xl rounded-lg p-6 w-96">
         <h2 className="text-3xl font-bold mb-4 text-center">Visitor Registration</h2>
 
         {message && <p className="text-green-500">{message}</p>}

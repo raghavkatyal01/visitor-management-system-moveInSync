@@ -2,8 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const VisitorLogin: React.FC = () => {
-  const [formData, setFormData] = useState({ "email": "", "password": "" });
+const AdminLogin: React.FC = () => {
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -14,26 +14,23 @@ const VisitorLogin: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    console.log("d",formData);
-    
+
     try {
-      const response = await axios.post("http://localhost:5002/api/visitors/login", formData);
+      const response = await axios.post("http://localhost:5002/api/admin/login", formData);
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("visitorId", response.data.visitor._id);
-      alert("Login Successfull")
-      navigate("/visitordashboard"); // Redirect to visitor dashboard after login
-      
+      localStorage.setItem("role", "admin");
+      navigate("/admin/dashboard");
     } catch (err) {
       setError("Invalid email or password.");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
       <div className="bg-white shadow-lg rounded-lg p-8 w-96">
-        <h2 className="text-3xl font-bold text-center text-gray-700 mb-6">Visitor Login</h2>
+        <h2 className="text-3xl font-bold text-center text-gray-700 mb-6">Admin Login</h2>
 
-        {error && <p className="text-red-500 text-center">{error}</p>}
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
@@ -61,7 +58,7 @@ const VisitorLogin: React.FC = () => {
 
         <p className="text-center text-gray-600 mt-4">
           Don't have an account?{" "}
-          <a href="/register" className="text-blue-500 hover:underline">
+          <a href="/admin/register" className="text-blue-500 hover:underline">
             Register here
           </a>
         </p>
@@ -70,4 +67,4 @@ const VisitorLogin: React.FC = () => {
   );
 };
 
-export default VisitorLogin;
+export default AdminLogin;
