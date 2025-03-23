@@ -1,4 +1,4 @@
-import { FaHome, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaUser, FaClipboardList, FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const VisitorSidebar: React.FC = () => {
@@ -6,7 +6,7 @@ const VisitorSidebar: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("visitorId");
+    localStorage.removeItem("role");
     navigate("/");
   };
 
@@ -19,6 +19,9 @@ const VisitorSidebar: React.FC = () => {
         </button>
         <button onClick={() => navigate("/visitor/profile")} className="flex items-center gap-2 hover:bg-gray-200 p-3 rounded transition">
           <FaUser className="text-purple-500" /> Profile
+        </button>
+        <button onClick={() => navigate("/visitor/requests")} className="flex items-center gap-2 hover:bg-gray-200 p-3 rounded transition">
+          <FaClipboardList className="text-green-500" /> Requests
         </button>
         <button onClick={handleLogout} className="flex items-center gap-2 hover:bg-red-500 hover:text-white p-3 rounded transition mt-auto">
           <FaSignOutAlt className="text-red-500" /> Logout
