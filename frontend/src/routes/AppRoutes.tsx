@@ -12,6 +12,9 @@ import ProtectedRoutes from "../Components/ProtectedRoutes";
 import VisitorProfile from "../pages/VisitorProfile";
 import VisitorProtectedRoute from "../Components/VisitorProtectedRoute";
 import Home from "../pages/Home";
+import VisitorRequests from "../pages/VisitorRequest";
+import ProtectedRoute from "../Components/ProtectedRoutes";
+import AdminRequests from "../pages/AdminRequestPage";
 
 
 const AppRoutes: FC= () => {
@@ -25,13 +28,16 @@ const AppRoutes: FC= () => {
         <Route path="/visitordashboard" element={<VisitorDashboard />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/register" element={<AdminRegister />} />
+        <Route path="/visitor/requests" element={<VisitorProtectedRoute component={VisitorRequests} />} />
         <Route index element={<Home/>}/>
         {/* Protected Route for Admin Dashboard */}
         <Route
           path="/admin/dashboard"
           element={<ProtectedRoutes Component={AdminDashboard} role="admin" />}
-        />
-        <Route path="*" element={<NotFound />} /> {/* 404 Page */}
+          
+     ></Route>
+     <Route path="/admin/requests" element={<ProtectedRoute Component={AdminRequests} role="admin"/>} />
+        <Route path="*" element={<NotFound />} /> 
       </Routes>
     </Router>
   );

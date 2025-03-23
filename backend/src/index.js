@@ -10,6 +10,7 @@ import authRoutes from "../routes/authRoutes.js";
 import visitorRoutes from "../routes/visitorRoutes.js";
 import adminRoutes from "../routes/AdminRoutes.js";
 import bcrypt from "bcryptjs";
+import visitRequestRoute from "../routes/visitRequestRoute.js";
 const app = express();
 
 app.use(cors());
@@ -24,7 +25,8 @@ app.get("/", (req, res) => {
 app.use("/api", authRoutes);
 app.use("/api/visitors", visitorRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/visitrequests", visitRequestRoute);
 const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

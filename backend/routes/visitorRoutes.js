@@ -127,7 +127,7 @@ router.get("/", async (req, res) => {
     const visitors = await Visitor.find(filter).sort({ visitDate: -1 });
     res.json(visitors);
   } catch (error) {
-    console.error("Error fetching visitors:", error);
+    
     res.status(500).json({ error: "Server error" });
   }
 });
