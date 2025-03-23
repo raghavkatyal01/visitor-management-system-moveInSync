@@ -72,7 +72,7 @@ npm start
 
 <img width="1434" alt="Screenshot 2025-03-24 at 1 43 05 AM" src="https://github.com/user-attachments/assets/8b4519a4-982c-4c95-895b-9eee1e317a52" />
 <img width="1434" alt="Screenshot 2025-03-24 at 1 42 56 AM" src="https://github.com/user-attachments/assets/f7c23baf-cd94-4ef2-b9fe-1462f1e50e49" />
-<img width="1434" alt="Screenshot 2025-03-24 at 1 43 05 AM" src="https://github.com/user-attachments/assets/232303ee-a014-45b7-a75d-8dde62b84e86" />
+
 
 
 
